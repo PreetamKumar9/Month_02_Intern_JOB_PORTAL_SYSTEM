@@ -1,0 +1,3111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f97316">
+    <meta name="description" content="Join CareerHub to discover career opportunities, manage your professional profile, and track your job applications.">
+    <title>Login & Register | CareerHub</title>
+
+    <style>
+        /* =====================================================
+           01. DESIGN SYSTEM
+        ===================================================== */
+        :root {
+            --primary: #f97316;
+            --primary-dark: #ea580c;
+            --primary-light: #fff7ed;
+            --black: #171717;
+            --dark: #262626;
+            --gray-900: #171717;
+            --gray-700: #404040;
+            --gray-600: #525252;
+            --gray-500: #737373;
+            --gray-400: #a3a3a3;
+            --gray-300: #d4d4d4;
+            --gray-200: #e5e5e5;
+            --gray-100: #f5f5f5;
+            --white: #ffffff;
+            --success: #15803d;
+            --danger: #dc2626;
+            --info: #2563eb;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, .04);
+            --shadow-md: 0 10px 35px rgba(0, 0, 0, .08);
+            --shadow-lg: 0 24px 70px rgba(0, 0, 0, .13);
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 22px;
+            --radius-xl: 30px;
+            --transition: .25s ease;
+            --container: 1240px;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: Inter, -apple-system, BlinkMacSystemFont,
+                         "Segoe UI", sans-serif;
+            color: var(--gray-900);
+            background: #fafafa;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body, input, button, select {
+            font-family: Inter, -apple-system, BlinkMacSystemFont,
+                         "Segoe UI", sans-serif;
+        }
+
+        button, input, select {
+            font-size: inherit;
+        }
+
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button:focus-visible,
+        a:focus-visible,
+        input:focus-visible,
+        select:focus-visible {
+            outline: 3px solid rgba(249, 115, 22, .35);
+            outline-offset: 3px;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: min(var(--container), calc(100% - 48px));
+            margin-inline: auto;
+        }
+
+        .text-orange {
+            color: var(--primary);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* =====================================================
+           02. SHARED HEADER
+           Keep this header consistent with index.html.
+        ===================================================== */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, .96);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .header-inner {
+            min-height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            font-size: 25px;
+            font-weight: 850;
+            letter-spacing: -1.2px;
+        }
+
+        .brand-symbol {
+            width: 39px;
+            height: 39px;
+            display: grid;
+            place-items: center;
+            color: var(--white);
+            background: var(--primary);
+            border-radius: 12px;
+            font-size: 24px;
+            font-weight: 900;
+            box-shadow: 0 5px 14px rgba(249, 115, 22, .24);
+        }
+
+        .brand-name {
+            color: var(--black);
+        }
+
+        .brand-name span {
+            color: var(--primary);
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 27px;
+        }
+
+        .nav-link {
+            position: relative;
+            color: var(--gray-600);
+            font-size: 14px;
+            font-weight: 600;
+            transition: color var(--transition);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 9px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: transform var(--transition),
+                        background var(--transition),
+                        border-color var(--transition),
+                        box-shadow var(--transition);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            color: var(--white);
+            background: var(--primary);
+            box-shadow: 0 5px 14px rgba(249, 115, 22, .16);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 8px 20px rgba(249, 115, 22, .24);
+        }
+
+        .btn-outline {
+            color: var(--gray-900);
+            border-color: var(--gray-300);
+            background: var(--white);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-dark {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .btn-dark:hover {
+            background: #333;
+        }
+
+        .mobile-menu-button {
+            display: none;
+            width: 42px;
+            height: 42px;
+            border: 1px solid var(--gray-200);
+            border-radius: 10px;
+            background: var(--white);
+            color: var(--black);
+            font-size: 22px;
+        }
+
+        /* =====================================================
+           03. AUTHENTICATION PAGE LAYOUT
+        ===================================================== */
+        .auth-main {
+            flex: 1;
+            padding: 56px 0 72px;
+            background:
+                radial-gradient(circle at 7% 12%,
+                    rgba(249, 115, 22, .07), transparent 27%),
+                radial-gradient(circle at 92% 80%,
+                    rgba(249, 115, 22, .06), transparent 25%),
+                #fafafa;
+        }
+
+        .auth-heading {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 35px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 13px;
+            border: 1px solid #fed7aa;
+            border-radius: 100px;
+            background: var(--primary-light);
+            color: #c2410c;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .eyebrow-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .auth-heading h1 {
+            margin-top: 19px;
+            font-size: clamp(30px, 4vw, 45px);
+            line-height: 1.16;
+            letter-spacing: -1.8px;
+            font-weight: 850;
+        }
+
+        .auth-heading p {
+            margin: 15px auto 0;
+            max-width: 530px;
+            color: var(--gray-500);
+            font-size: 15px;
+        }
+
+        .auth-layout {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: .95fr 1.05fr;
+            min-height: 660px;
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            background: var(--white);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* =====================================================
+           04. LEFT BRAND PANEL
+        ===================================================== */
+        .auth-visual {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            padding: 45px 40px 35px;
+            color: var(--white);
+            background:
+                radial-gradient(circle at 100% 0%,
+                    rgba(255,255,255,.12), transparent 30%),
+                linear-gradient(145deg, #171717 0%, #262626 60%, #3a2115 100%);
+        }
+
+        .auth-visual::before,
+        .auth-visual::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(255,255,255,.09);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .auth-visual::before {
+            width: 400px;
+            height: 400px;
+            right: -180px;
+            top: 100px;
+        }
+
+        .auth-visual::after {
+            width: 280px;
+            height: 280px;
+            right: -120px;
+            top: 160px;
+        }
+
+        .visual-content,
+        .visual-bottom {
+            position: relative;
+            z-index: 1;
+        }
+
+        .visual-label {
+            display: inline-block;
+            padding: 8px 13px;
+            border: 1px solid rgba(255,255,255,.16);
+            border-radius: 100px;
+            background: rgba(255,255,255,.06);
+            color: #fed7aa;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .visual-content h2 {
+            margin-top: 25px;
+            max-width: 420px;
+            font-size: clamp(30px, 3vw, 40px);
+            line-height: 1.17;
+            letter-spacing: -1.2px;
+        }
+
+        .visual-content h2 span {
+            color: #fb923c;
+        }
+
+        .visual-content > p {
+            max-width: 385px;
+            margin-top: 17px;
+            color: #d4d4d4;
+            font-size: 14px;
+            line-height: 1.85;
+        }
+
+        .benefit-list {
+            display: grid;
+            gap: 17px;
+            margin-top: 32px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+        }
+
+        .benefit-icon {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            color: #fdba74;
+            border: 1px solid rgba(251,146,60,.25);
+            border-radius: 11px;
+            background: rgba(249,115,22,.12);
+            font-size: 17px;
+        }
+
+        .benefit-item h3 {
+            font-size: 14px;
+            font-weight: 750;
+        }
+
+        .benefit-item p {
+            margin-top: 3px;
+            color: #a3a3a3;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .visual-bottom {
+            margin-top: 42px;
+            padding-top: 22px;
+            border-top: 1px solid rgba(255,255,255,.13);
+        }
+
+        .visual-bottom p {
+            color: #d4d4d4;
+            font-size: 12px;
+        }
+
+        .trust-row {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin-top: 13px;
+        }
+
+        .trust-avatars {
+            display: flex;
+            padding-left: 5px;
+        }
+
+        .trust-avatar {
+            width: 30px;
+            height: 30px;
+            margin-left: -5px;
+            display: grid;
+            place-items: center;
+            border: 2px solid #262626;
+            border-radius: 50%;
+            background: #fed7aa;
+            color: #7c2d12;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .trust-avatar:nth-child(2) {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .trust-avatar:nth-child(3) {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .trust-avatar:nth-child(4) {
+            background: #fce7f3;
+            color: #9d174d;
+        }
+
+        .trust-copy {
+            color: #d4d4d4;
+            font-size: 11px;
+        }
+
+        .trust-copy strong {
+            color: var(--white);
+        }
+
+        /* =====================================================
+           05. FORM PANEL
+        ===================================================== */
+        .auth-form-panel {
+            padding: 38px 42px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        .form-topline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .form-topline h2 {
+            font-size: 25px;
+            font-weight: 850;
+            letter-spacing: -.8px;
+        }
+
+        .form-topline p {
+            margin-top: 5px;
+            color: var(--gray-500);
+            font-size: 13px;
+        }
+
+        .secure-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gray-500);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        /* =====================================================
+           06. LOGIN / REGISTER SWITCH
+        ===================================================== */
+        .auth-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            padding: 5px;
+            margin-bottom: 23px;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            background: var(--gray-100);
+        }
+
+        .auth-tab {
+            padding: 11px 12px;
+            border: 0;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--gray-500);
+            font-size: 13px;
+            font-weight: 750;
+            transition: var(--transition);
+        }
+
+        .auth-tab.active {
+            background: var(--white);
+            color: var(--primary-dark);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .auth-tab:hover:not(.active) {
+            color: var(--black);
+        }
+
+        /* =====================================================
+           07. SOCIAL LOGIN BUTTONS
+        ===================================================== */
+        .social-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 11px;
+        }
+
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 11px 8px;
+            border: 1px solid var(--gray-200);
+            border-radius: 10px;
+            background: var(--white);
+            color: var(--gray-700);
+            font-size: 12px;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .social-button:hover {
+            border-color: var(--gray-400);
+            background: #fafafa;
+        }
+
+        .google-mark {
+            width: 18px;
+            height: 18px;
+            display: grid;
+            place-items: center;
+            color: #4285f4;
+            font-size: 17px;
+            font-weight: 900;
+        }
+
+        .social-note {
+            margin-top: 9px;
+            color: var(--gray-500);
+            font-size: 10px;
+            text-align: center;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 21px 0;
+            color: var(--gray-400);
+            font-size: 11px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--gray-200);
+        }
+
+        /* =====================================================
+           08. INPUTS AND FORM CONTROLS
+        ===================================================== */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px 13px;
+        }
+
+        .form-group {
+            min-width: 0;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 7px;
+            color: var(--gray-700);
+            font-size: 12px;
+            font-weight: 750;
+        }
+
+        .required {
+            color: var(--danger);
+        }
+
+        .form-control-wrap {
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            min-height: 45px;
+            padding: 11px 13px;
+            border: 1px solid var(--gray-300);
+            border-radius: 9px;
+            background: var(--white);
+            color: var(--gray-900);
+            font-size: 13px;
+            outline: none;
+            transition: border-color var(--transition),
+                        box-shadow var(--transition);
+        }
+
+        .form-control::placeholder {
+            color: #a3a3a3;
+        }
+
+        .form-control:hover {
+            border-color: var(--gray-400);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(249,115,22,.10);
+        }
+
+        .form-control.invalid {
+            border-color: var(--danger);
+        }
+
+        .form-control.valid {
+            border-color: var(--success);
+        }
+
+        select.form-control {
+            cursor: pointer;
+            appearance: auto;
+        }
+
+        .password-input {
+            padding-right: 47px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 9px;
+            transform: translateY(-50%);
+            padding: 7px;
+            border: 0;
+            border-radius: 6px;
+            background: transparent;
+            color: var(--gray-500);
+            font-size: 11px;
+            font-weight: 750;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-dark);
+        }
+
+        .field-message {
+            display: block;
+            min-height: 0;
+            margin-top: 5px;
+            color: var(--danger);
+            font-size: 10px;
+        }
+
+        .field-message:empty {
+            display: none;
+        }
+
+        .password-strength {
+            margin-top: 9px;
+        }
+
+        .strength-bars {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+        }
+
+        .strength-bar {
+            height: 4px;
+            border-radius: 10px;
+            background: var(--gray-200);
+            transition: background var(--transition);
+        }
+
+        .strength-caption {
+            margin-top: 5px;
+            color: var(--gray-500);
+            font-size: 10px;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin: 17px 0;
+        }
+
+        .check-label {
+            display: inline-flex;
+            align-items: flex-start;
+            gap: 8px;
+            color: var(--gray-600);
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .check-label input {
+            width: 15px;
+            height: 15px;
+            margin-top: 2px;
+            accent-color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .text-link {
+            color: var(--primary-dark);
+            font-size: 11px;
+            font-weight: 750;
+        }
+
+        .text-link:hover {
+            text-decoration: underline;
+        }
+
+        .terms-link {
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+
+        .submit-button {
+            width: 100%;
+            min-height: 48px;
+            margin-top: 3px;
+            border: 0;
+            border-radius: 10px;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 13px;
+            font-weight: 800;
+            box-shadow: 0 6px 15px rgba(249,115,22,.18);
+            transition: var(--transition);
+        }
+
+        .submit-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 9px 20px rgba(249,115,22,.25);
+        }
+
+        .submit-button:disabled {
+            opacity: .65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-bottom-note {
+            margin-top: 19px;
+            color: var(--gray-500);
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .form-bottom-note strong {
+            color: var(--gray-700);
+        }
+
+        .role-note {
+            padding: 11px 13px;
+            border: 1px solid #fed7aa;
+            border-radius: 9px;
+            background: var(--primary-light);
+            color: #9a3412;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        /* =====================================================
+           09. ALERTS AND NOTIFICATIONS
+        ===================================================== */
+        .alert {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 17px;
+            padding: 12px 13px;
+            border: 1px solid transparent;
+            border-radius: 9px;
+            font-size: 12px;
+            line-height: 1.65;
+        }
+
+        .alert-success {
+            color: #166534;
+            border-color: #bbf7d0;
+            background: #f0fdf4;
+        }
+
+        .alert-error {
+            color: #991b1b;
+            border-color: #fecaca;
+            background: #fef2f2;
+        }
+
+        .alert-info {
+            color: #1e40af;
+            border-color: #bfdbfe;
+            background: #eff6ff;
+        }
+
+        .alert-warning {
+            color: #92400e;
+            border-color: #fde68a;
+            background: #fffbeb;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 94px;
+            right: 22px;
+            z-index: 2000;
+            display: grid;
+            gap: 10px;
+            width: min(360px, calc(100% - 32px));
+        }
+
+        .toast {
+            padding: 15px 17px;
+            border: 1px solid var(--gray-200);
+            border-left: 4px solid var(--primary);
+            border-radius: 10px;
+            background: var(--white);
+            box-shadow: var(--shadow-md);
+            color: var(--gray-800, #262626);
+            font-size: 13px;
+            animation: slide-in .25s ease both;
+        }
+
+        .toast.success {
+            border-left-color: var(--success);
+        }
+
+        .toast.error {
+            border-left-color: var(--danger);
+        }
+
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateX(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* =====================================================
+           10. SUCCESS / ACCOUNT SUMMARY PANEL
+        ===================================================== */
+        .account-summary {
+            padding: 20px;
+            border: 1px solid var(--gray-200);
+            border-radius: 14px;
+            background: #fff;
+        }
+
+        .account-avatar {
+            width: 62px;
+            height: 62px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 15px;
+            border-radius: 19px;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            font-size: 24px;
+            font-weight: 850;
+        }
+
+        .account-summary h3 {
+            font-size: 20px;
+            letter-spacing: -.5px;
+        }
+
+        .account-summary p {
+            margin-top: 4px;
+            color: var(--gray-500);
+            font-size: 12px;
+        }
+
+        .account-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .account-actions .btn {
+            padding: 11px 10px;
+            font-size: 12px;
+        }
+
+        .session-note {
+            margin-top: 14px;
+            padding: 11px;
+            border-radius: 9px;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            font-size: 11px;
+        }
+
+        /* =====================================================
+           11. SHARED FOOTER
+           Keep this footer consistent with index.html.
+        ===================================================== */
+        .site-footer {
+            margin-top: auto;
+            padding: 55px 0 0;
+            background: #171717;
+            color: #d4d4d4;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.15fr;
+            gap: 40px;
+            padding-bottom: 42px;
+        }
+
+        .footer-brand .brand-name {
+            color: var(--white);
+        }
+
+        .footer-description {
+            max-width: 300px;
+            margin-top: 17px;
+            color: #a3a3a3;
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 17px;
+            color: var(--white);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .footer-links {
+            display: grid;
+            gap: 12px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: #a3a3a3;
+            font-size: 12px;
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: #fb923c;
+        }
+
+        .footer-newsletter {
+            margin-top: 12px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 7px;
+            margin-top: 12px;
+        }
+
+        .newsletter-input {
+            width: 100%;
+            min-width: 0;
+            padding: 11px 12px;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            background: #262626;
+            color: var(--white);
+            outline: none;
+            font-size: 11px;
+        }
+
+        .newsletter-input:focus {
+            border-color: var(--primary);
+        }
+
+        .newsletter-button {
+            padding: 0 14px;
+            border: 0;
+            border-radius: 8px;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .newsletter-message {
+            margin-top: 8px;
+            font-size: 11px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            padding: 20px 0;
+            border-top: 1px solid #333;
+        }
+
+        .footer-bottom p,
+        .footer-bottom a {
+            color: #a3a3a3;
+            font-size: 11px;
+        }
+
+        .footer-legal {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 19px;
+        }
+
+        /* =====================================================
+           12. RESPONSIVE DESIGN
+        ===================================================== */
+        @media (max-width: 1080px) {
+            .main-nav {
+                gap: 17px;
+            }
+
+            .auth-layout {
+                grid-template-columns: .85fr 1.15fr;
+            }
+
+            .auth-visual {
+                padding: 38px 30px 30px;
+            }
+
+            .auth-form-panel {
+                padding: 34px 30px;
+            }
+
+            .footer-grid {
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .mobile-menu-button {
+                display: grid;
+                place-items: center;
+            }
+
+            .main-nav {
+                position: absolute;
+                top: 78px;
+                left: 0;
+                right: 0;
+                display: none;
+                align-items: stretch;
+                flex-direction: column;
+                gap: 0;
+                padding: 12px 24px 18px;
+                border-bottom: 1px solid var(--gray-200);
+                background: var(--white);
+                box-shadow: var(--shadow-md);
+            }
+
+            .main-nav.open {
+                display: flex;
+            }
+
+            .nav-link {
+                padding: 12px 0;
+                border-bottom: 1px solid var(--gray-100);
+            }
+
+            .header-actions .btn {
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+
+            .auth-layout {
+                max-width: 610px;
+                grid-template-columns: 1fr;
+            }
+
+            .auth-visual {
+                min-height: 370px;
+            }
+
+            .benefit-list {
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+            }
+
+            .visual-bottom {
+                margin-top: 26px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .container {
+                width: calc(100% - 30px);
+            }
+
+            .header-inner {
+                min-height: 68px;
+                gap: 10px;
+            }
+
+            .brand {
+                gap: 7px;
+                font-size: 21px;
+            }
+
+            .brand-symbol {
+                width: 34px;
+                height: 34px;
+                border-radius: 10px;
+                font-size: 21px;
+            }
+
+            .main-nav {
+                top: 68px;
+            }
+
+            .header-actions {
+                gap: 7px;
+            }
+
+            .header-actions .btn-outline {
+                display: none;
+            }
+
+            .header-actions .btn-primary {
+                padding: 9px 11px;
+                font-size: 11px;
+            }
+
+            .auth-main {
+                padding: 37px 0 45px;
+            }
+
+            .auth-heading {
+                margin-bottom: 25px;
+            }
+
+            .auth-heading h1 {
+                font-size: 32px;
+                letter-spacing: -1.1px;
+            }
+
+            .auth-heading p {
+                font-size: 13px;
+            }
+
+            .auth-layout {
+                border-radius: 19px;
+            }
+
+            .auth-visual {
+                min-height: auto;
+                padding: 29px 23px 24px;
+            }
+
+            .visual-content h2 {
+                font-size: 30px;
+            }
+
+            .visual-content > p {
+                font-size: 13px;
+            }
+
+            .benefit-list {
+                grid-template-columns: 1fr;
+                margin-top: 24px;
+            }
+
+            .visual-bottom {
+                margin-top: 27px;
+            }
+
+            .auth-form-panel {
+                padding: 28px 21px;
+            }
+
+            .form-topline h2 {
+                font-size: 23px;
+            }
+
+            .secure-label {
+                display: none;
+            }
+
+            .social-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 13px;
+            }
+
+            .form-group.full-width {
+                grid-column: auto;
+            }
+
+            .form-options {
+                align-items: flex-start;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px 20px;
+            }
+
+            .footer-grid > :first-child,
+            .footer-grid > :last-child {
+                grid-column: 1 / -1;
+            }
+
+            .footer-bottom {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .account-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         HEADER: SAME SHARED BRANDING AS PAGE 1
+    ====================================================== -->
+    <header class="site-header">
+        <div class="container header-inner">
+
+            <a href="index.html" class="brand" aria-label="CareerHub home">
+                <span class="brand-symbol">C</span>
+                <span class="brand-name">Career<span>Hub.</span></span>
+            </a>
+
+            <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="jobs.html" class="nav-link">Find Jobs</a>
+                <a href="index.html#companies" class="nav-link">Companies</a>
+                <a href="index.html#how-it-works" class="nav-link">How It Works</a>
+                <a href="applications.html" class="nav-link">My Applications</a>
+                <a href="profile.html" class="nav-link">My Profile</a>
+            </nav>
+
+            <div class="header-actions" id="headerActions">
+                <a href="auth.html?mode=login"
+                   class="btn btn-outline"
+                   id="headerLogin">Log in</a>
+
+                <a href="auth.html?mode=register"
+                   class="btn btn-primary"
+                   id="headerRegister">Get Started <span>→</span></a>
+
+                <button class="mobile-menu-button"
+                        id="mobileMenuButton"
+                        aria-label="Toggle navigation"
+                        aria-expanded="false"
+                        aria-controls="mainNav">☰</button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- =====================================================
+         MAIN AUTHENTICATION SECTION
+    ====================================================== -->
+    <main class="auth-main">
+        <div class="container">
+
+            <section class="auth-heading">
+                <span class="eyebrow">
+                    <span class="eyebrow-dot"></span>
+                    Your next chapter starts here
+                </span>
+
+                <h1>Build your future with <span class="text-orange">CareerHub.</span></h1>
+
+                <p>
+                    Sign in to continue your career journey or create an account
+                    to discover opportunities that match your ambitions.
+                </p>
+            </section>
+
+            <section class="auth-layout" aria-label="Account access">
+
+                <!-- LEFT INFORMATION PANEL -->
+                <aside class="auth-visual">
+
+                    <div class="visual-content">
+                        <span class="visual-label">YOUR CAREER. YOUR RULES.</span>
+
+                        <h2>
+                            Great careers begin with
+                            <span>one opportunity.</span>
+                        </h2>
+
+                        <p>
+                            Create your professional presence, explore
+                            opportunities, and keep your job search organized
+                            in one place.
+                        </p>
+
+                        <div class="benefit-list">
+
+                            <div class="benefit-item">
+                                <span class="benefit-icon">⌕</span>
+                                <div>
+                                    <h3>Discover opportunities</h3>
+                                    <p>Explore roles across different industries.</p>
+                                </div>
+                            </div>
+
+                            <div class="benefit-item">
+                                <span class="benefit-icon">♙</span>
+                                <div>
+                                    <h3>Build your profile</h3>
+                                    <p>Showcase your skills and experience.</p>
+                                </div>
+                            </div>
+
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <div>
+                                    <h3>Track applications</h3>
+                                    <p>Keep your career activities organized.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="visual-bottom">
+                        <p>Your next opportunity could be closer than you think.</p>
+
+                        <div class="trust-row">
+                            <div class="trust-avatars" aria-hidden="true">
+                                <span class="trust-avatar">AK</span>
+                                <span class="trust-avatar">RS</span>
+                                <span class="trust-avatar">PM</span>
+                                <span class="trust-avatar">JD</span>
+                            </div>
+
+                            <div class="trust-copy">
+                                <strong>One profile. More possibilities.</strong>
+                                <br>Make your next move with confidence.
+                            </div>
+                        </div>
+                    </div>
+
+                </aside>
+
+                <!-- RIGHT FORM PANEL -->
+                <div class="auth-form-panel">
+
+                    <div class="form-topline">
+                        <div>
+                            <h2 id="formHeading">Welcome back!</h2>
+                            <p id="formSubheading">Enter your details to sign in.</p>
+                        </div>
+
+                        <span class="secure-label">▣ Local demo</span>
+                    </div>
+
+                    <!-- LOGIN / REGISTER TABS -->
+                    <div class="auth-tabs" role="tablist"
+                         aria-label="Choose account action">
+
+                        <button class="auth-tab active"
+                                type="button"
+                                id="loginTab"
+                                role="tab"
+                                aria-selected="true"
+                                aria-controls="loginForm">
+                            Log in
+                        </button>
+
+                        <button class="auth-tab"
+                                type="button"
+                                id="registerTab"
+                                role="tab"
+                                aria-selected="false"
+                                aria-controls="registerForm">
+                            Create account
+                        </button>
+
+                    </div>
+
+                    <div id="formAlert" class="alert hidden"
+                         role="status" aria-live="polite"></div>
+
+                    <!-- SOCIAL AUTH PLACEHOLDERS -->
+                    <div class="social-buttons" id="socialButtons">
+
+                        <button class="social-button"
+                                type="button"
+                                id="googleButton">
+                            <span class="google-mark">G</span>
+                            Continue with Google
+                        </button>
+
+                        <button class="social-button"
+                                type="button"
+                                id="linkedinButton">
+                            <span aria-hidden="true">in</span>
+                            Continue with LinkedIn
+                        </button>
+
+                    </div>
+
+                    <p class="social-note" id="socialNote">
+                        Social sign-in requires provider configuration.
+                    </p>
+
+                    <div class="divider" id="formDivider">OR CONTINUE WITH EMAIL</div>
+
+                    <!-- LOGIN FORM -->
+                    <form id="loginForm" novalidate>
+
+                        <div class="form-grid">
+
+                            <div class="form-group full-width">
+                                <label class="form-label" for="loginEmail">
+                                    Email address <span class="required">*</span>
+                                </label>
+
+                                <input class="form-control"
+                                       type="email"
+                                       id="loginEmail"
+                                       name="email"
+                                       placeholder="you@example.com"
+                                       autocomplete="email"
+                                       required>
+
+                                <span class="field-message"
+                                      id="loginEmailError"></span>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="form-label" for="loginPassword">
+                                    Password <span class="required">*</span>
+                                </label>
+
+                                <div class="form-control-wrap">
+                                    <input class="form-control password-input"
+                                           type="password"
+                                           id="loginPassword"
+                                           name="password"
+                                           placeholder="Enter your password"
+                                           autocomplete="current-password"
+                                           required>
+
+                                    <button type="button"
+                                            class="password-toggle"
+                                            data-toggle-password="loginPassword"
+                                            aria-label="Show password">
+                                        Show
+                                    </button>
+                                </div>
+
+                                <span class="field-message"
+                                      id="loginPasswordError"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="form-options">
+                            <label class="check-label">
+                                <input type="checkbox" id="rememberMe">
+                                <span>Remember me on this device</span>
+                            </label>
+
+                            <a href="#forgotPassword"
+                               class="text-link"
+                               id="forgotPasswordLink">
+                                Forgot password?
+                            </a>
+                        </div>
+
+                        <button type="submit" class="submit-button" id="loginSubmit">
+                            Sign in to CareerHub <span>→</span>
+                        </button>
+
+                        <p class="form-bottom-note">
+                            New to CareerHub?
+                            <a href="auth.html?mode=register"
+                               class="text-link"
+                               data-switch-mode="register">Create an account</a>
+                        </p>
+
+                    </form>
+
+                    <!-- REGISTRATION FORM -->
+                    <form id="registerForm" class="hidden" novalidate>
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label class="form-label" for="registerFirstName">
+                                    First name <span class="required">*</span>
+                                </label>
+
+                                <input class="form-control"
+                                       type="text"
+                                       id="registerFirstName"
+                                       name="firstName"
+                                       placeholder="First name"
+                                       autocomplete="given-name"
+                                       maxlength="60"
+                                       required>
+
+                                <span class="field-message"
+                                      id="registerFirstNameError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="registerLastName">
+                                    Last name <span class="required">*</span>
+                                </label>
+
+                                <input class="form-control"
+                                       type="text"
+                                       id="registerLastName"
+                                       name="lastName"
+                                       placeholder="Last name"
+                                       autocomplete="family-name"
+                                       maxlength="60"
+                                       required>
+
+                                <span class="field-message"
+                                      id="registerLastNameError"></span>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="form-label" for="registerEmail">
+                                    Email address <span class="required">*</span>
+                                </label>
+
+                                <input class="form-control"
+                                       type="email"
+                                       id="registerEmail"
+                                       name="email"
+                                       placeholder="you@example.com"
+                                       autocomplete="email"
+                                       maxlength="254"
+                                       required>
+
+                                <span class="field-message"
+                                      id="registerEmailError"></span>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="form-label" for="registerRole">
+                                    Account type <span class="required">*</span>
+                                </label>
+
+                                <select class="form-control"
+                                        id="registerRole"
+                                        name="role"
+                                        required>
+                                    <option value="jobseeker">Job seeker</option>
+                                    <option value="recruiter">Recruiter</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="form-label" for="registerPassword">
+                                    Create password <span class="required">*</span>
+                                </label>
+
+                                <div class="form-control-wrap">
+                                    <input class="form-control password-input"
+                                           type="password"
+                                           id="registerPassword"
+                                           name="password"
+                                           placeholder="At least 8 characters"
+                                           autocomplete="new-password"
+                                           minlength="8"
+                                           required>
+
+                                    <button type="button"
+                                            class="password-toggle"
+                                            data-toggle-password="registerPassword"
+                                            aria-label="Show password">
+                                        Show
+                                    </button>
+                                </div>
+
+                                <div class="password-strength"
+                                     id="passwordStrength"
+                                     aria-live="polite">
+                                    <div class="strength-bars">
+                                        <span class="strength-bar"></span>
+                                        <span class="strength-bar"></span>
+                                        <span class="strength-bar"></span>
+                                        <span class="strength-bar"></span>
+                                    </div>
+                                    <p class="strength-caption"
+                                       id="strengthCaption">
+                                        Use 8+ characters with mixed character types.
+                                    </p>
+                                </div>
+
+                                <span class="field-message"
+                                      id="registerPasswordError"></span>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="form-label" for="registerConfirmPassword">
+                                    Confirm password <span class="required">*</span>
+                                </label>
+
+                                <div class="form-control-wrap">
+                                    <input class="form-control password-input"
+                                           type="password"
+                                           id="registerConfirmPassword"
+                                           name="confirmPassword"
+                                           placeholder="Re-enter your password"
+                                           autocomplete="new-password"
+                                           required>
+
+                                    <button type="button"
+                                            class="password-toggle"
+                                            data-toggle-password="registerConfirmPassword"
+                                            aria-label="Show password">
+                                        Show
+                                    </button>
+                                </div>
+
+                                <span class="field-message"
+                                      id="registerConfirmPasswordError"></span>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="check-label">
+                                    <input type="checkbox"
+                                           id="acceptTerms"
+                                           required>
+                                    <span>
+                                        I agree to the
+                                        <a class="terms-link"
+                                           href="#terms">Terms of Service</a>
+                                        and
+                                        <a class="terms-link"
+                                           href="#privacy">Privacy Policy</a>.
+                                    </span>
+                                </label>
+
+                                <span class="field-message"
+                                      id="acceptTermsError"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="role-note" id="roleNote">
+                            <strong>Job seeker:</strong>
+                            Create your profile, discover job listings, and
+                            organize your applications.
+                        </div>
+
+                        <button type="submit"
+                                class="submit-button"
+                                id="registerSubmit">
+                            Create my account <span>→</span>
+                        </button>
+
+                        <p class="form-bottom-note">
+                            Already have an account?
+                            <a href="auth.html?mode=login"
+                               class="text-link"
+                               data-switch-mode="login">Sign in</a>
+                        </p>
+
+                    </form>
+
+                    <!-- ACCOUNT SUMMARY SHOWN AFTER LOGIN -->
+                    <section id="accountPanel" class="hidden"
+                             aria-live="polite">
+                        <div class="account-summary">
+                            <div class="account-avatar" id="accountAvatar">CH</div>
+
+                            <h3 id="accountName">Welcome!</h3>
+                            <p id="accountEmail"></p>
+                            <p id="accountRole"></p>
+
+                            <div class="account-actions">
+                                <a href="profile.html"
+                                   class="btn btn-primary">Manage profile</a>
+
+                                <a href="jobs.html"
+                                   class="btn btn-outline">Explore jobs</a>
+                            </div>
+
+                            <div class="session-note">
+                                Your demo account is saved in this browser's
+                                localStorage. Browser-local data is not a secure
+                                substitute for a server-side account system.
+                            </div>
+
+                            <button type="button"
+                                    class="btn btn-dark"
+                                    id="logoutButton"
+                                    style="width:100%; margin-top:14px;">
+                                Sign out
+                            </button>
+                        </div>
+                    </section>
+
+                    <div class="role-note" style="margin-top:22px;">
+                        <strong>Demo security notice:</strong>
+                        This frontend-only version stores account information
+                        in your browser. Do not use real or reused passwords.
+                        Production authentication requires a secure backend.
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- =====================================================
+         FOOTER: SAME SHARED BRANDING AS PAGE 1
+    ====================================================== -->
+    <footer class="site-footer">
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div>
+                    <a href="index.html"
+                       class="brand footer-brand"
+                       aria-label="CareerHub home">
+                        <span class="brand-symbol">C</span>
+                        <span class="brand-name">Career<span>Hub.</span></span>
+                    </a>
+
+                    <p class="footer-description">
+                        Connecting ambition with opportunity. Discover roles,
+                        showcase your potential, and take the next step in your
+                        professional journey.
+                    </p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Explore</h3>
+                    <ul class="footer-links">
+                        <li><a href="jobs.html">Browse jobs</a></li>
+                        <li><a href="index.html#companies">Top companies</a></li>
+                        <li><a href="index.html#how-it-works">How it works</a></li>
+                        <li><a href="applications.html">My applications</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>For candidates</h3>
+                    <ul class="footer-links">
+                        <li><a href="auth.html?mode=register">Create account</a></li>
+                        <li><a href="profile.html">Build your profile</a></li>
+                        <li><a href="auth.html?mode=login">Sign in</a></li>
+                        <li><a href="profile.html">Account settings</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Stay connected</h3>
+                    <p class="footer-description" style="margin-top:0;">
+                        Receive career tips and product updates.
+                    </p>
+
+                    <form class="newsletter-form" id="newsletterForm">
+                        <label for="newsletterEmail"
+                               class="hidden">Email address</label>
+
+                        <input class="newsletter-input"
+                               type="email"
+                               id="newsletterEmail"
+                               placeholder="Your email address"
+                               autocomplete="email"
+                               required>
+
+                        <button class="newsletter-button"
+                                type="submit">Join</button>
+                    </form>
+
+                    <p class="newsletter-message"
+                       id="newsletterMessage"
+                       aria-live="polite"></p>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>© <span id="currentYear"></span> CareerHub. All rights reserved.</p>
+
+                <div class="footer-legal">
+                    <a href="#privacy" id="privacyLink">Privacy Policy</a>
+                    <a href="#terms" id="termsLink">Terms of Service</a>
+                    <a href="index.html">Home</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <div class="toast-container"
+         id="toastContainer"
+         aria-live="polite"
+         aria-atomic="true"></div>
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+    <script>
+        "use strict";
+
+        /* =====================================================
+           01. APPLICATION CONFIGURATION
+        ===================================================== */
+
+        const CareerHub = {
+            storageKeys: {
+                users: "ch_users",
+                currentUser: "ch_currentUser",
+                newsletter: "ch_newsletter_emails",
+                profilePrefix: "ch_profile_"
+            },
+
+            mode: "login",
+
+            elements: {},
+
+            init() {
+                this.cacheElements();
+                this.bindEvents();
+                this.updateYear();
+                this.initializeNavigation();
+                this.initializeMode();
+                this.updateHeader();
+                this.renderExistingSession();
+                this.initializeRoleNote();
+            },
+
+            cacheElements() {
+                const ids = [
+                    "mainNav",
+                    "mobileMenuButton",
+                    "loginTab",
+                    "registerTab",
+                    "loginForm",
+                    "registerForm",
+                    "formHeading",
+                    "formSubheading",
+                    "formAlert",
+                    "socialButtons",
+                    "socialNote",
+                    "formDivider",
+                    "accountPanel",
+                    "headerLogin",
+                    "headerRegister",
+                    "loginEmail",
+                    "loginPassword",
+                    "registerFirstName",
+                    "registerLastName",
+                    "registerEmail",
+                    "registerRole",
+                    "registerPassword",
+                    "registerConfirmPassword",
+                    "acceptTerms",
+                    "rememberMe",
+                    "roleNote",
+                    "passwordStrength",
+                    "strengthCaption",
+                    "loginSubmit",
+                    "registerSubmit",
+                    "logoutButton",
+                    "accountAvatar",
+                    "accountName",
+                    "accountEmail",
+                    "accountRole",
+                    "toastContainer",
+                    "newsletterForm",
+                    "newsletterEmail",
+                    "newsletterMessage"
+                ];
+
+                ids.forEach(id => {
+                    this.elements[id] = document.getElementById(id);
+                });
+            },
+
+            /* =================================================
+               02. STORAGE HELPERS
+            ================================================= */
+
+            readJSON(key, fallback = []) {
+                try {
+                    const value = localStorage.getItem(key);
+
+                    if (value === null) {
+                        return fallback;
+                    }
+
+                    return JSON.parse(value);
+                } catch (error) {
+                    console.error("Unable to read localStorage:", error);
+                    return fallback;
+                }
+            },
+
+            writeJSON(key, value) {
+                try {
+                    localStorage.setItem(key, JSON.stringify(value));
+                    return true;
+                } catch (error) {
+                    console.error("Unable to write localStorage:", error);
+
+                    this.showToast(
+                        "Unable to save data in this browser. Check storage settings.",
+                        "error"
+                    );
+
+                    return false;
+                }
+            },
+
+            getUsers() {
+                const users = this.readJSON(
+                    this.storageKeys.users,
+                    []
+                );
+
+                return Array.isArray(users) ? users : [];
+            },
+
+            saveUsers(users) {
+                return this.writeJSON(
+                    this.storageKeys.users,
+                    users
+                );
+            },
+
+            getCurrentUser() {
+                const userId = localStorage.getItem(
+                    this.storageKeys.currentUser
+                );
+
+                if (!userId) {
+                    return null;
+                }
+
+                return this.getUsers().find(
+                    user => user.id === userId
+                ) || null;
+            },
+
+            getSafeUser(user) {
+                if (!user) {
+                    return null;
+                }
+
+                const {
+                    password,
+                    ...safeUser
+                } = user;
+
+                return safeUser;
+            },
+
+            /* =================================================
+               03. EVENT BINDINGS
+            ================================================= */
+
+            bindEvents() {
+                this.elements.loginTab.addEventListener(
+                    "click",
+                    () => this.switchMode("login")
+                );
+
+                this.elements.registerTab.addEventListener(
+                    "click",
+                    () => this.switchMode("register")
+                );
+
+                this.elements.loginForm.addEventListener(
+                    "submit",
+                    event => this.handleLogin(event)
+                );
+
+                this.elements.registerForm.addEventListener(
+                    "submit",
+                    event => this.handleRegister(event)
+                );
+
+                this.elements.mobileMenuButton.addEventListener(
+                    "click",
+                    () => this.toggleMobileNavigation()
+                );
+
+                document.querySelectorAll("[data-toggle-password]")
+                    .forEach(button => {
+                        button.addEventListener("click", () => {
+                            this.togglePassword(button);
+                        });
+                    });
+
+                document.querySelectorAll("[data-switch-mode]")
+                    .forEach(link => {
+                        link.addEventListener("click", event => {
+                            event.preventDefault();
+
+                            this.switchMode(
+                                link.dataset.switchMode
+                            );
+                        });
+                    });
+
+                this.elements.registerPassword.addEventListener(
+                    "input",
+                    () => this.updatePasswordStrength()
+                );
+
+                this.elements.registerConfirmPassword.addEventListener(
+                    "input",
+                    () => this.validatePasswordMatch(false)
+                );
+
+                this.elements.registerRole.addEventListener(
+                    "change",
+                    () => this.initializeRoleNote()
+                );
+
+                this.elements.logoutButton.addEventListener(
+                    "click",
+                    () => this.logout()
+                );
+
+                document.getElementById("forgotPasswordLink")
+                    .addEventListener("click", event => {
+                        event.preventDefault();
+                        this.handleForgotPassword();
+                    });
+
+                document.getElementById("googleButton")
+                    .addEventListener("click", () => {
+                        this.showToast(
+                            "Google sign-in needs OAuth configuration and a backend.",
+                            "info"
+                        );
+                    });
+
+                document.getElementById("linkedinButton")
+                    .addEventListener("click", () => {
+                        this.showToast(
+                            "LinkedIn sign-in needs OAuth configuration and a backend.",
+                            "info"
+                        );
+                    });
+
+                this.elements.newsletterForm.addEventListener(
+                    "submit",
+                    event => this.handleNewsletter(event)
+                );
+
+                document.getElementById("privacyLink")
+                    .addEventListener("click", event => {
+                        event.preventDefault();
+                        this.showToast(
+                            "Add your actual privacy policy before publishing.",
+                            "info"
+                        );
+                    });
+
+                document.getElementById("termsLink")
+                    .addEventListener("click", event => {
+                        event.preventDefault();
+                        this.showToast(
+                            "Add your actual terms of service before publishing.",
+                            "info"
+                        );
+                    });
+
+                document.addEventListener("keydown", event => {
+                    if (event.key === "Escape") {
+                        this.closeMobileNavigation();
+                    }
+                });
+
+                window.addEventListener("storage", event => {
+                    if (
+                        event.key === this.storageKeys.currentUser ||
+                        event.key === this.storageKeys.users
+                    ) {
+                        this.updateHeader();
+                        this.renderExistingSession();
+                    }
+                });
+            },
+
+            /* =================================================
+               04. PAGE MODE
+            ================================================= */
+
+            initializeMode() {
+                const params = new URLSearchParams(
+                    window.location.search
+                );
+
+                const requestedMode = params.get("mode");
+
+                this.switchMode(
+                    requestedMode === "register"
+                        ? "register"
+                        : "login",
+                    false
+                );
+            },
+
+            switchMode(mode, updateURL = true) {
+                if (!["login", "register"].includes(mode)) {
+                    return;
+                }
+
+                this.mode = mode;
+
+                const isLogin = mode === "login";
+
+                this.elements.loginForm.classList.toggle(
+                    "hidden",
+                    !isLogin
+                );
+
+                this.elements.registerForm.classList.toggle(
+                    "hidden",
+                    isLogin
+                );
+
+                this.elements.loginTab.classList.toggle(
+                    "active",
+                    isLogin
+                );
+
+                this.elements.registerTab.classList.toggle(
+                    "active",
+                    !isLogin
+                );
+
+                this.elements.loginTab.setAttribute(
+                    "aria-selected",
+                    String(isLogin)
+                );
+
+                this.elements.registerTab.setAttribute(
+                    "aria-selected",
+                    String(!isLogin)
+                );
+
+                this.elements.formHeading.textContent = isLogin
+                    ? "Welcome back!"
+                    : "Create your account";
+
+                this.elements.formSubheading.textContent = isLogin
+                    ? "Enter your details to sign in."
+                    : "Start building your next career chapter.";
+
+                this.elements.socialButtons.classList.remove("hidden");
+                this.elements.socialNote.classList.remove("hidden");
+                this.elements.formDivider.classList.remove("hidden");
+
+                this.elements.accountPanel.classList.add("hidden");
+
+                this.clearAlert();
+                this.clearFieldMessages();
+
+                if (updateURL) {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set("mode", mode);
+
+                    window.history.replaceState({}, "", url);
+                }
+            },
+
+            /* =================================================
+               05. MOBILE NAVIGATION
+            ================================================= */
+
+            initializeNavigation() {
+                this.elements.mainNav
+                    .querySelectorAll("a")
+                    .forEach(link => {
+                        link.addEventListener("click", () => {
+                            this.closeMobileNavigation();
+                        });
+                    });
+            },
+
+            toggleMobileNavigation() {
+                const nav = this.elements.mainNav;
+                const button = this.elements.mobileMenuButton;
+
+                const isOpen = nav.classList.toggle("open");
+
+                button.setAttribute(
+                    "aria-expanded",
+                    String(isOpen)
+                );
+
+                button.textContent = isOpen ? "✕" : "☰";
+            },
+
+            closeMobileNavigation() {
+                this.elements.mainNav.classList.remove("open");
+
+                this.elements.mobileMenuButton.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                this.elements.mobileMenuButton.textContent = "☰";
+            },
+
+            /* =================================================
+               06. HEADER AND ACCOUNT SESSION
+            ================================================= */
+
+            updateHeader() {
+                const user = this.getCurrentUser();
+
+                if (user) {
+                    this.elements.headerLogin.textContent =
+                        "My Account";
+
+                    this.elements.headerLogin.href = "profile.html";
+
+                    this.elements.headerRegister.textContent =
+                        "Sign out";
+
+                    this.elements.headerRegister.href = "#logout";
+
+                    this.elements.headerRegister.onclick = event => {
+                        event.preventDefault();
+                        this.logout();
+                    };
+                } else {
+                    this.elements.headerLogin.textContent = "Log in";
+                    this.elements.headerLogin.href =
+                        "auth.html?mode=login";
+
+                    this.elements.headerRegister.innerHTML =
+                        'Get Started <span>→</span>';
+
+                    this.elements.headerRegister.href =
+                        "auth.html?mode=register";
+
+                    this.elements.headerRegister.onclick = null;
+                }
+            },
+
+            renderExistingSession() {
+                const user = this.getCurrentUser();
+
+                if (!user) {
+                    this.elements.accountPanel.classList.add("hidden");
+                    return;
+                }
+
+                this.switchMode(this.mode, false);
+
+                this.elements.loginForm.classList.add("hidden");
+                this.elements.registerForm.classList.add("hidden");
+
+                this.elements.socialButtons.classList.add("hidden");
+                this.elements.socialNote.classList.add("hidden");
+                this.elements.formDivider.classList.add("hidden");
+
+                this.elements.loginTab.classList.remove("active");
+                this.elements.registerTab.classList.remove("active");
+
+                this.elements.accountPanel.classList.remove("hidden");
+
+                this.elements.formHeading.textContent =
+                    "You're signed in";
+
+                this.elements.formSubheading.textContent =
+                    "Manage your CareerHub account.";
+
+                const fullName = [
+                    user.firstName,
+                    user.lastName
+                ].filter(Boolean).join(" ") || "CareerHub member";
+
+                this.elements.accountAvatar.textContent =
+                    this.getInitials(fullName);
+
+                this.elements.accountName.textContent =
+                    "Welcome, " + fullName + "!";
+
+                this.elements.accountEmail.textContent =
+                    user.email || "";
+
+                this.elements.accountRole.textContent =
+                    user.role === "recruiter"
+                        ? "Recruiter account"
+                        : "Job seeker account";
+
+                this.updateHeader();
+            },
+
+            getInitials(name) {
+                return name
+                    .trim()
+                    .split(/\s+/)
+                    .slice(0, 2)
+                    .map(part => part.charAt(0).toUpperCase())
+                    .join("") || "CH";
+            },
+
+            /* =================================================
+               07. REGISTRATION
+            ================================================= */
+
+            handleRegister(event) {
+                event.preventDefault();
+
+                this.clearFieldMessages();
+                this.clearAlert();
+
+                const firstName = this.elements.registerFirstName
+                    .value.trim();
+
+                const lastName = this.elements.registerLastName
+                    .value.trim();
+
+                const email = this.normalizeEmail(
+                    this.elements.registerEmail.value
+                );
+
+                const role = this.elements.registerRole.value;
+
+                const password = this.elements.registerPassword.value;
+
+                const confirmPassword =
+                    this.elements.registerConfirmPassword.value;
+
+                const acceptedTerms =
+                    this.elements.acceptTerms.checked;
+
+                let valid = true;
+
+                if (!this.validateName(firstName)) {
+                    this.setFieldError(
+                        "registerFirstName",
+                        "Enter a valid first name."
+                    );
+                    valid = false;
+                }
+
+                if (!this.validateName(lastName)) {
+                    this.setFieldError(
+                        "registerLastName",
+                        "Enter a valid last name."
+                    );
+                    valid = false;
+                }
+
+                if (!this.validateEmail(email)) {
+                    this.setFieldError(
+                        "registerEmail",
+                        "Enter a valid email address."
+                    );
+                    valid = false;
+                }
+
+                if (!["jobseeker", "recruiter"].includes(role)) {
+                    this.showAlert(
+                        "Please select a valid account type.",
+                        "error"
+                    );
+                    valid = false;
+                }
+
+                if (!this.isStrongEnough(password)) {
+                    this.setFieldError(
+                        "registerPassword",
+                        "Use at least 8 characters, including letters and numbers."
+                    );
+                    valid = false;
+                }
+
+                if (password !== confirmPassword) {
+                    this.setFieldError(
+                        "registerConfirmPassword",
+                        "The passwords do not match."
+                    );
+                    valid = false;
+                }
+
+                if (!acceptedTerms) {
+                    this.setFieldError(
+                        "acceptTerms",
+                        "Please accept the terms to continue."
+                    );
+                    valid = false;
+                }
+
+                if (!valid) {
+                    this.showAlert(
+                        "Please correct the highlighted fields.",
+                        "error"
+                    );
+                    return;
+                }
+
+                const users = this.getUsers();
+
+                const existingUser = users.find(
+                    user => this.normalizeEmail(user.email) === email
+                );
+
+                if (existingUser) {
+                    this.setFieldError(
+                        "registerEmail",
+                        "An account with this email already exists."
+                    );
+
+                    this.showAlert(
+                        "This email is already registered. Try signing in.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+                /*
+                 * IMPORTANT:
+                 * This is a frontend demonstration only.
+                 * Passwords are stored in browser localStorage.
+                 * Never use this approach in a real production system.
+                 */
+
+                const newUser = {
+                    id: this.createId(),
+                    firstName,
+                    lastName,
+                    email,
+                    role,
+                    password,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+
+                users.push(newUser);
+
+                if (!this.saveUsers(users)) {
+                    return;
+                }
+
+                const profile = {
+                    userId: newUser.id,
+                    firstName,
+                    lastName,
+                    email,
+                    phone: "",
+                    location: "",
+                    headline: role === "recruiter"
+                        ? "Recruiter"
+                        : "Job seeker",
+                    bio: "",
+                    skills: [],
+                    experience: [],
+                    education: [],
+                    resumeName: "",
+                    website: "",
+                    linkedin: "",
+                    updatedAt: new Date().toISOString()
+                };
+
+                const profileSaved = this.writeJSON(
+                    this.storageKeys.profilePrefix + newUser.id,
+                    profile
+                );
+
+                if (!profileSaved) {
+                    return;
+                }
+
+                /*
+                 * Registration does not automatically sign the user in.
+                 * They must use the login form with their new credentials.
+                 */
+
+                this.elements.loginEmail.value = email;
+                this.elements.loginPassword.value = "";
+
+                this.elements.registerForm.reset();
+
+                this.updatePasswordStrength();
+                this.switchMode("login");
+
+                this.showAlert(
+                    "Your account was created successfully. Sign in to continue.",
+                    "success"
+                );
+
+                this.showToast(
+                    "Account created successfully!",
+                    "success"
+                );
+            },
+
+            /* =================================================
+               08. LOGIN
+            ================================================= */
+
+            handleLogin(event) {
+                event.preventDefault();
+
+                this.clearFieldMessages();
+                this.clearAlert();
+
+                const email = this.normalizeEmail(
+                    this.elements.loginEmail.value
+                );
+
+                const password = this.elements.loginPassword.value;
+
+                let valid = true;
+
+                if (!this.validateEmail(email)) {
+                    this.setFieldError(
+                        "loginEmail",
+                        "Enter a valid email address."
+                    );
+                    valid = false;
+                }
+
+                if (!password) {
+                    this.setFieldError(
+                        "loginPassword",
+                        "Password is required."
+                    );
+                    valid = false;
+                }
+
+                if (!valid) {
+                    this.showAlert(
+                        "Please enter your email and password.",
+                        "error"
+                    );
+                    return;
+                }
+
+                const users = this.getUsers();
+
+                const user = users.find(candidate =>
+                    this.normalizeEmail(candidate.email) === email
+                );
+
+                /*
+                 * Local demo authentication:
+                 * This comparison is not secure for production.
+                 */
+
+                if (!user || user.password !== password) {
+                    this.showAlert(
+                        "Invalid email or password. Check your details and try again.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+                try {
+                    localStorage.setItem(
+                        this.storageKeys.currentUser,
+                        user.id
+                    );
+                } catch (error) {
+                    this.showToast(
+                        "Could not save your login session in this browser.",
+                        "error"
+                    );
+                    return;
+                }
+
+                this.elements.loginPassword.value = "";
+
+                this.updateHeader();
+                this.renderExistingSession();
+
+                this.showToast(
+                    "Welcome back, " + user.firstName + "!",
+                    "success"
+                );
+
+                /*
+                 * We keep the user on this page so they can
+                 * see their signed-in state before navigating.
+                 */
+            },
+
+            /* =================================================
+               09. LOGOUT
+            ================================================= */
+
+            logout() {
+                try {
+                    localStorage.removeItem(
+                        this.storageKeys.currentUser
+                    );
+                } catch (error) {
+                    console.error("Unable to sign out:", error);
+                    this.showToast(
+                        "Unable to clear the current session.",
+                        "error"
+                    );
+                    return;
+                }
+
+                this.elements.loginForm.reset();
+                this.elements.registerForm.reset();
+
+                this.updateHeader();
+
+                this.switchMode("login", false);
+
+                this.elements.accountPanel.classList.add("hidden");
+                this.elements.loginForm.classList.remove("hidden");
+
+                this.showAlert(
+                    "You have signed out of CareerHub.",
+                    "success"
+                );
+
+                this.showToast("Signed out successfully.", "success");
+            },
+
+            /* =================================================
+               10. FORGOT PASSWORD
+            ================================================= */
+
+            handleForgotPassword() {
+                const email = this.normalizeEmail(
+                    this.elements.loginEmail.value
+                );
+
+                if (!this.validateEmail(email)) {
+                    this.showAlert(
+                        "Enter your registered email address first.",
+                        "info"
+                    );
+
+                    this.elements.loginEmail.focus();
+                    return;
+                }
+
+                const userExists = this.getUsers().some(
+                    user => this.normalizeEmail(user.email) === email
+                );
+
+                if (!userExists) {
+                    this.showAlert(
+                        "No local demo account was found for this email.",
+                        "error"
+                    );
+                    return;
+                }
+
+                /*
+                 * A secure password reset needs a server,
+                 * identity verification, and a one-time reset token.
+                 * Never reset a password just because an email matches.
+                 */
+
+                this.showAlert(
+                    "Password reset is not configured in this frontend demo. A production app needs a secure server-side reset flow.",
+                    "info"
+                );
+            },
+
+            /* =================================================
+               11. VALIDATION HELPERS
+            ================================================= */
+
+            normalizeEmail(email) {
+                return String(email || "")
+                    .trim()
+                    .toLowerCase();
+            },
+
+            validateEmail(email) {
+                if (!email || email.length > 254) {
+                    return false;
+                }
+
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            },
+
+            validateName(name) {
+                return (
+                    typeof name === "string" &&
+                    name.trim().length >= 2 &&
+                    name.trim().length <= 60 &&
+                    !/[<>]/.test(name)
+                );
+            },
+
+            isStrongEnough(password) {
+                return (
+                    password.length >= 8 &&
+                    /[A-Za-z]/.test(password) &&
+                    /\d/.test(password)
+                );
+            },
+
+            createId() {
+                if (
+                    window.crypto &&
+                    typeof window.crypto.randomUUID === "function"
+                ) {
+                    return window.crypto.randomUUID();
+                }
+
+                return (
+                    Date.now().toString(36) +
+                    Math.random().toString(36).slice(2, 12)
+                );
+            },
+
+            /* =================================================
+               12. FIELD ERRORS
+            ================================================= */
+
+            setFieldError(inputId, message) {
+                const input = document.getElementById(inputId);
+                const error = document.getElementById(inputId + "Error");
+
+                if (input) {
+                    input.classList.add("invalid");
+                    input.classList.remove("valid");
+                    input.setAttribute("aria-invalid", "true");
+                }
+
+                if (error) {
+                    error.textContent = message;
+                }
+            },
+
+            clearFieldMessages() {
+                document.querySelectorAll(".field-message")
+                    .forEach(element => {
+                        element.textContent = "";
+                    });
+
+                document.querySelectorAll(".form-control")
+                    .forEach(input => {
+                        input.classList.remove("invalid", "valid");
+                        input.removeAttribute("aria-invalid");
+                    });
+            },
+
+            clearAlert() {
+                const alert = this.elements.formAlert;
+
+                alert.className = "alert hidden";
+                alert.textContent = "";
+            },
+
+            showAlert(message, type = "info") {
+                const alert = this.elements.formAlert;
+
+                alert.className = "alert alert-" + type;
+                alert.textContent = message;
+            },
+
+            /* =================================================
+               13. PASSWORD VISIBILITY
+            ================================================= */
+
+            togglePassword(button) {
+                const inputId = button.dataset.togglePassword;
+                const input = document.getElementById(inputId);
+
+                if (!input) {
+                    return;
+                }
+
+                const shouldShow = input.type === "password";
+
+                input.type = shouldShow ? "text" : "password";
+
+                button.textContent = shouldShow ? "Hide" : "Show";
+
+                button.setAttribute(
+                    "aria-label",
+                    shouldShow ? "Hide password" : "Show password"
+                );
+            },
+
+            /* =================================================
+               14. PASSWORD STRENGTH FEEDBACK
+            ================================================= */
+
+            updatePasswordStrength() {
+                const password = this.elements.registerPassword.value;
+
+                const bars = this.elements.passwordStrength
+                    .querySelectorAll(".strength-bar");
+
+                let score = 0;
+
+                if (password.length >= 8) score++;
+                if (/[a-z]/.test(password) &&
+                    /[A-Z]/.test(password)) score++;
+                if (/\d/.test(password)) score++;
+                if (/[^A-Za-z0-9]/.test(password)) score++;
+
+                const colors = [
+                    "#dc2626",
+                    "#f97316",
+                    "#eab308",
+                    "#16a34a"
+                ];
+
+                bars.forEach((bar, index) => {
+                    bar.style.background =
+                        index < score
+                            ? colors[Math.max(0, score - 1)]
+                            : "#e5e5e5";
+                });
+
+                const captions = [
+                    "Use 8+ characters with mixed character types.",
+                    "Weak password",
+                    "Fair password",
+                    "Good password",
+                    "Strong password"
+                ];
+
+                this.elements.strengthCaption.textContent =
+                    password.length === 0
+                        ? captions[0]
+                        : captions[score];
+            },
+
+            validatePasswordMatch(showError = true) {
+                const password = this.elements.registerPassword.value;
+
+                const confirmPassword =
+                    this.elements.registerConfirmPassword.value;
+
+                const error = document.getElementById(
+                    "registerConfirmPasswordError"
+                );
+
+                const input = this.elements.registerConfirmPassword;
+
+                if (!confirmPassword) {
+                    if (showError) {
+                        error.textContent = "Please confirm your password.";
+                    }
+                    return false;
+                }
+
+                if (password !== confirmPassword) {
+                    if (showError) {
+                        this.setFieldError(
+                            "registerConfirmPassword",
+                            "The passwords do not match."
+                        );
+                    }
+                    return false;
+                }
+
+                error.textContent = "";
+                input.classList.remove("invalid");
+                input.removeAttribute("aria-invalid");
+
+                return true;
+            },
+
+            /* =================================================
+               15. ROLE EXPLANATION
+            ================================================= */
+
+            initializeRoleNote() {
+                const role = this.elements.registerRole.value;
+
+                if (role === "recruiter") {
+                    this.elements.roleNote.innerHTML =
+                        "<strong>Recruiter:</strong> Create a professional " +
+                        "recruiter account. A production system should verify " +
+                        "employer identity and protect job-posting permissions.";
+                } else {
+                    this.elements.roleNote.innerHTML =
+                        "<strong>Job seeker:</strong> Create your profile, " +
+                        "discover job listings, and organize your applications.";
+                }
+            },
+
+            /* =================================================
+               16. NEWSLETTER
+            ================================================= */
+
+            handleNewsletter(event) {
+                event.preventDefault();
+
+                const email = this.normalizeEmail(
+                    this.elements.newsletterEmail.value
+                );
+
+                if (!this.validateEmail(email)) {
+                    this.elements.newsletterMessage.textContent =
+                        "Enter a valid email address.";
+
+                    this.elements.newsletterMessage.style.color =
+                        "#fca5a5";
+
+                    return;
+                }
+
+                const emails = this.readJSON(
+                    this.storageKeys.newsletter,
+                    []
+                );
+
+                if (!Array.isArray(emails)) {
+                    this.elements.newsletterMessage.textContent =
+                        "Unable to process your request.";
+
+                    return;
+                }
+
+                if (emails.includes(email)) {
+                    this.elements.newsletterMessage.textContent =
+                        "This email is already subscribed.";
+
+                    this.elements.newsletterMessage.style.color =
+                        "#fcd34d";
+
+                    return;
+                }
+
+                emails.push(email);
+
+                const saved = this.writeJSON(
+                    this.storageKeys.newsletter,
+                    emails
+                );
+
+                if (saved) {
+                    this.elements.newsletterMessage.textContent =
+                        "Subscribed successfully!";
+
+                    this.elements.newsletterMessage.style.color =
+                        "#86efac";
+
+                    this.elements.newsletterForm.reset();
+                }
+            },
+
+            /* =================================================
+               17. TOAST NOTIFICATIONS
+            ================================================= */
+
+            showToast(message, type = "info") {
+                const toast = document.createElement("div");
+
+                toast.className = "toast " + type;
+                toast.setAttribute("role", "status");
+                toast.textContent = message;
+
+                this.elements.toastContainer.appendChild(toast);
+
+                window.setTimeout(() => {
+                    toast.style.opacity = "0";
+                    toast.style.transform = "translateX(12px)";
+
+                    window.setTimeout(() => {
+                        toast.remove();
+                    }, 250);
+                }, 3500);
+            },
+
+            /* =================================================
+               18. FOOTER UTILITIES
+            ================================================= */
+
+            updateYear() {
+                document.getElementById("currentYear").textContent =
+                    new Date().getFullYear();
+            }
+        };
+
+        /* =====================================================
+           19. START APPLICATION
+        ===================================================== */
+
+        document.addEventListener("DOMContentLoaded", () => {
+            CareerHub.init();
+        });
+    </script>
+
+</body>
+</html>
