@@ -90,9 +90,6 @@ The project demo is hosted on **GitHub Pages**.
 
 **Preetam Kumar**
 
-- GitHub: [Add your GitHub profile](https://github.com/preetamkumar9)
-- LinkedIn: [Add your LinkedIn profile URL](https://www.linkedin.com/)
-
 ## 📄 License
 
 This project is intended for educational and portfolio purposes. Add a license file if you want to specify the terms under which others may use or modify the source code.
